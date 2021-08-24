@@ -2,10 +2,10 @@
 
 Karen::Karen()
 {
-	ptr[0] =  Karen::debug;
-	ptr[1] =  Karen::info;
-	ptr[2] =  Karen::warning;
-	ptr[3] =  Karen::error;
+	ptr[0] =  &Karen::debug;
+	ptr[1] =  &Karen::info;
+	ptr[2] =  &Karen::warning;
+	ptr[3] =  &Karen::error;
 	level_string[0] = "DEBUG";
 	level_string[1] = "INFO";
 	level_string[2] = "WARNING";
@@ -17,20 +17,33 @@ void	Karen::complain(std::string level)
 	int i;
 
 	i = 0;
-	while(i < 4 && level != level_string[i])
+	while (i < 4 && level != level_string[i])
 		++i;
-	while (i >= 4)
+	switch (i)
 	{
-		std::cout << "[ Probably complaining about insignificant problems ]\n"<<
-					"There are many ways to filter karen, "
-					"but one of the best ones is to SWITCH her off ;)\n";
-		return;
-	}
-	while (i < 4)
-	{
-		std::cout << "[ " + level_string[i] + " ]\n";
-		ptr[i]();
-		++i;
+		case 0:
+		{
+			std::cout << "[ " + level_string[0] + " ]\n";
+			(this->*ptr[0])();
+		}
+		case 1:
+		{
+			std::cout << "[ " + level_string[1] + " ]\n";
+			(this->*ptr[1])();
+		}
+		case 2:
+		{
+			std::cout << "[ " + level_string[2] + " ]\n";
+			(this->*ptr[2])();
+		}
+		case 3:
+		{
+			std::cout << "[ " + level_string[3] + " ]\n";
+			(this->*ptr[3])();
+			break;
+		}
+		default: std::cout
+			<< "[ Probably complaining about insignificant problems ]\n";
 	}
 }
 

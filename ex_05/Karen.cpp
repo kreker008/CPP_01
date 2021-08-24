@@ -2,10 +2,10 @@
 
 Karen::Karen()
 {
-	ptr[0] =  Karen::debug;
-	ptr[1] =  Karen::info;
-	ptr[2] =  Karen::warning;
-	ptr[3] =  Karen::error;
+	ptr[0] =  &Karen::debug;
+	ptr[1] =  &Karen::info;
+	ptr[2] =  &Karen::warning;
+	ptr[3] =  &Karen::error;
 	level_string[0] = "DEBUG";
 	level_string[1] = "INFO";
 	level_string[2] = "WARNING";
@@ -24,7 +24,7 @@ void	Karen::complain(std::string level)
 		std::cout << "Invalid karen func\n";
 		return;
 	}
-	ptr[i]();
+	(this->*ptr[i])();
 }
 
 void	Karen::debug()
